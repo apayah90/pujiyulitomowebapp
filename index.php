@@ -3,7 +3,7 @@ session_start();
 
 //cek apakah user sudah login
 if(!isset($_SESSION['username'])){
-    die("Anda belum login");//jika belum login jangan lanjut..
+    header("location:login.php");//jika belum login jangan lanjut..
 }
 
 //cek level user
