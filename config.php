@@ -9,16 +9,17 @@ $db_name = 'pujiyulitomowebapp';
 
  
  //Establishes the connection
-$link = mysqli_init();
-mysqli_real_connect($link, $host, $username, $password, $db_name, 3306);
-if (mysqli_connect_errno($link)) {
-die('Failed to connect to MySQL: '.mysqli_connect_error());
-}
+
+ //Establishes the connection
+ try {
+        $link = new PDO("sqlsrv:server = $host; Database = $db_name", $username, $password);
+        $link->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    } catch(Exception $e) {
+        echo "Failed: " . $e;
+    }
 
 // Check connection
-if($link === false){
-    die("ERROR: Could not connect. " . mysqli_connect_error());
-}
+
 
 //
 
