@@ -14,6 +14,7 @@ $db_name = 'pujiyulitomowebapp';
  try {
         $link = new PDO("sqlsrv:server = $host; Database = $db_name", $username, $password);
         $link->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+       echo "Berhasil terkoneksi ke database";
     } catch(Exception $e) {
         echo "Failed: " . $e;
     }
