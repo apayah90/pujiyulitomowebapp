@@ -1,14 +1,4 @@
-<?php
-session_start();
 
-//cek apakah user sudah login
-if(!isset($_SESSION['username'])){
-    header("location:login.php");//jika belum login jangan lanjut..
-}
-
-//cek level user
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,61 +37,50 @@ if(!isset($_SESSION['username'])){
                         
                     </div>
                     <p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
-					
-					
+
+
+                    <div class="container">
+                        <h2>Daftar Customer</h2>
+                        <table class="table">
+                            <tr>
+                                <td>Id</td>
+                                <td>Nama</td>
+                                <td>Email</td>
+                                <td>Alamat</td>
+                                <td>Notelp</td>
+                                <td>Action</td>
+                            </tr>    
+                        
+
                     <?php
-                    // Include config file
-                    require_once 'config.php';
-                    
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM customers";
-                    if($result = mysqli_query($link, $sql)){
-                        if(mysqli_num_rows($result) > 0){
-                            echo "<table class='table table-bordered table-striped'>";
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>Id</th>";
-                                        echo "<th>Nama</th>";
-                                        echo "<th>Email</th>";
-                                        echo "<th>Alamat</th>";
-                                        echo "<th>No.Telp</th>";
-                                        
-										echo "<th>Action</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = mysqli_fetch_array($result)){
-                                    echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['nama'] . "</td>";
-                                        echo "<td>" . $row['email'] . "</td>";
-                                        echo "<td>" . $row['alamat'] . "</td>";
-										echo "<td>" . $row['notelp'] . "</td>";
-                                        
-                                        echo "<td>";
-                                            
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";                            
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
-                        } else{
-                            echo "<p class='lead'><em>No records were found.</em></p>";
-                        }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                    }
- 
-                    // Close connection
-                    mysqli_close($link);
+                    require_once("config.php");
+                    $Cfg = new Config();
+                    $show = $Cfg->showCustomer();
+                    while ($row = $show->fetch(PDO::FETCH_OBJ)) {
+                        echo "
+                        <tr>
+                        <td>$row->$id</td>
+                        <td>$row->$nama</td>
+                        <td>$row->$email</td>
+                        <td>$row->$alamat</td>
+                        <td>$row->$notelp</td>
+                        <td><a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
+                            <a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>
+                        </td>
+                        </tr>";
+                    };
+
+
+
                     ?>
+
+                    </table>
+                    </div>
+
                 </div>
             </div>        
         </div>
     </div>
 </body>
 </html>
+
